@@ -16,6 +16,25 @@ export class PersonasComponent implements OnInit {
     telefono:new FormControl(''),
     email:new FormControl('')
   });
+  personaSeleccionada = {id:'',telefono:'',email:''};
+  personaModificar = new FormGroup({
+    nombre:new FormControl(''),
+    telefono:new FormControl(''),
+    email:new FormControl('')
+  });
+
+  seleccionarPersona (persona: any){
+    console.log("seleccionarpersona");
+
+    this.personaSeleccionada = persona;
+    this.personaModificar = new FormGroup({
+      nombre:new FormControl(''+persona.nombre),
+      telefono:new FormControl(''+persona.telefono),
+      email:new FormControl(''+persona.email)
+    });
+    console.log(this.personaModificar.value.nombre);
+  }
+
     constructor(private http:HttpClient) { }
   ngOnInit(): void {
     this.recuperarDatos()
@@ -44,6 +63,33 @@ export class PersonasComponent implements OnInit {
       telefono: this.nuevaPersona.value.telefono,
       email: this.nuevaPersona.value.email,
     }).subscribe(res =>{
+      console.log("res")
+      console.log(res)
+      this.recuperarDatos();
+    },
+    err =>{
+      console.log(err);
+    }
+    );
+  }
+  actualizarPersona(){
+    this.http.put<any>(this.baseURL+'personas/'+this.personaSeleccionada.id,{
+      nombre: this.personaModificar.value.nombre,
+      telefono: this.personaModificar.value.telefono,
+      email: this.personaModificar.value.email,
+    }).subscribe(res =>{
+      console.log("res")
+      console.log(res)
+      this.recuperarDatos();
+    },
+    err =>{
+      console.log(err);
+    }
+    );
+  }
+  deletePersona(personaModificar: any){
+    this.http.delete<any>(this.baseURL+'personas/'+personaModificar.id)
+    .subscribe(res =>{
       console.log("res")
       console.log(res)
       this.recuperarDatos();
