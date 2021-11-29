@@ -1,8 +1,20 @@
 <div class="container mt-5">
+  <div class="">
+    <Button
+      type="button"
+      class="btn btn-primary"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModalAgregarPersona"
+    >
+      Agregar persona
+    </Button>
+    <br />
+    <br />
+  </div>
   <div class="row">
     <div class="col-sm-12">
-      <table class="table">
-        <thead>
+      <table class="table table-bordered border-primary">
+        <thead class="table-dark">
           <tr>
             <th scope="col">Id</th>
             <th scope="col">Nombre</th>
@@ -13,7 +25,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let persona of personas">
-            <th scope="row">{{ persona.id }}</th>
+            <td>{{ persona.id }}</td>
             <td>{{ persona.nombre }}</td>
             <td>{{ persona.telefono }}</td>
             <td>{{ persona.email }}</td>
@@ -21,6 +33,68 @@
           </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="exampleModalAgregarPersona"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agregar Persona</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="nuevaPersona" (ngSubmit)="agregarPersona()">
+          <div class="row mb-3">
+            <label for="InputEmail" class="form-label">Nombre</label>
+            <input
+              type="email"
+              class="form-control"
+              id="nombre"
+              formControlName="nombre"
+            />
+          </div>
+          <div class="row mb-3">
+            <label for="InputEmail2" class="form-label">Telefono</label>
+            <input
+              type="number"
+              class="form-control"
+              id="telefono"
+              formControlName="telefono"
+            />
+          </div>
+          <div class="row mb-3">
+            <label for="InputEmail3" class="form-label"
+              >Correo Electronico</label
+            >
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              formControlName="email"
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">Agregar</button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
     </div>
   </div>
 </div>
